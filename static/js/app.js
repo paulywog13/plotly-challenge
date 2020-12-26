@@ -34,7 +34,7 @@ function optionChanged(subjectId) {
     var graphInfo = data.samples.filter(sd => sd.id == subjectId)
     var firstGraphInfo = graphInfo[0]
     // Slice for the top ten otu values
-    var otuIds = firstGraphInfo.otu_ids.slice(0, 10).reverse().map(otus => `otu Id:${otus}` )
+    var otuIds = firstGraphInfo.otu_ids.slice(0, 10).reverse().map(otus => `OTU ID:${otus}` )
     var sampVals = firstGraphInfo.sample_values.slice(0, 10).reverse()
     var otuLabels = firstGraphInfo.otu_labels.slice(0, 10).reverse() 
     // Creating trace for bar chart setup
@@ -57,7 +57,10 @@ function optionChanged(subjectId) {
         mode: "markers",
         marker: {color: firstGraphInfo.otu_ids, size:  firstGraphInfo.sample_values}
     }]
-    Plotly.newPlot("bubble", trace2)
+    layout = {
+        xaxis: {title: {text: "OTU ID"}}
+    }
+    Plotly.newPlot("bubble", trace2, layout)
     })};
 
 
