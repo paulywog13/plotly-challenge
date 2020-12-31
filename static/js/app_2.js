@@ -76,39 +76,62 @@ function optionChanged(subjectId) {
         xaxis: {title: {text: "OTU ID"}}
     }
     Plotly.newPlot("bubble", trace_bubble, layout)
+
+    // Creating a trace for the gauge chart
+    var washfreq = data.metadata.wfreq;
+    var traceGauge = {
+        type: 'pie',
+        showlegend: false,
+        hole: 0.4,
+        rotation: 90,
+        values: [ 20, 20, 20, 20, 20, 20, 20, 20, 20, 180],
+        text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+        direction: 'clockwise',
+        textinfo: 'text',
+        textposition: 'inside',
+        marker: {
+          colors: ['','','','','','','','','','white'],
+          labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+          hoverinfo: 'label'
+        }
+      }
+        // let weight = 0;
+        // if (washfreq == 2 || washfreq == 3){
+        //     weight = 3;
+        // } else if (washfreq == 4){
+        //     weight = 1;
+        // } else if (washfreq == 5){
+        //     weight = -.5;
+        // } else if (washfreq == 6){
+        //     weight = -2;
+        // } else if (washfreq == 7){
+        //     weight = -3;
+        // }
+      // needle
+      var degrees = 180-(20 * washfreq),
+      radius = .5;
+      var radians = degrees * Math.PI / 180;
+      var x = radius * Math.cos(radians);
+      var y = radius * Math.sin(radians);
+  
+      var gaugeLayout = {
+        shapes: [{
+          type: 'line',
+          x0: radius,
+          y0: radius,
+          x1: x,
+          y1: y,
+          line: {
+            color: 'red',
+            width: 5
+          }
+        }],
+        title: 'Belly Button Washing Frequency: Scrubs per Week',
+        xaxis: {zeroline: false, range: [-1, 1],  fixedrange: true},
+        yaxis: {zeroline: false, range: [-1, 1],  fixedrange: true}
+      }
+  
+      var dataGauge = [traceGauge]
+  
+      Plotly.plot('gauge', dataGauge, gaugeLayout)
     })};
-
-
-// // Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
-// // Sort the otu data by samples
-// data.sort(
-//     function(a, b) {
-//         if (a.names === b.) 
-//     }
-//     )
-
-// // Call updatePlotly() when a change takes place to the DOM
-// d3.selectAll("#selDataset").on("change", getData);
-
-// // This function is called when a dropdown menu item is selected
-// function getData() {
-//     // Use D3 to select the dropdown menu
-//     var dropdownMenu = d3.select("#selDataset");
-//     // Assign the value of the dropdown menu option to a variable
-//     var dataset = dropdownMenu.property("value");
-//     // Initialize an empty array for the sample's data
-//     var data = [];
-
-//     if (dataset == "940") {
-//         names = 940;
-//     }
-//     updatePlotly(data);
-// }
-
-// // // Update the restyled plot's values
-// // function updatePlotly(newdata) {
-// //   Plotly.restyle("pie", "values", [newdata]);
-// // }
-  
-// // init();
-  
