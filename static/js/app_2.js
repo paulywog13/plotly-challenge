@@ -78,60 +78,85 @@ function optionChanged(subjectId) {
     Plotly.newPlot("bubble", trace_bubble, layout)
 
     // Creating a trace for the gauge chart
+    // Trig to calc meter point
+    
+    function gaugePointer(value){
+       
+    var degrees = 180 +(20 * (9 - value) - 180),
+        radius = .5;
+    var radians = degrees * Math.PI / 180;
+    var x = radius * Math.cos(radians);
+    var y = radius * Math.sin(radians);
+
+    // Path: may have to change to create a better triangle
+    var mainPath = 'M -.0 -0.035 L .0 0.035 L ',
+        pathX = String(x),
+        space = ' ',
+        pathY = String(y),
+        pathEnd = ' Z';
+    var path = mainPath.concat(pathX,space,pathY,pathEnd);
+        
+        return path;
+
+    }
     var washfreq = data.metadata.wfreq;
-    var traceGauge = {
-        type: 'pie',
+    var data = [{ 
+        type: 'scatter',
+        x: [0], 
+        y: [0],
+        marker: {size: 18, color:'850000'},
         showlegend: false,
-        hole: 0.4,
-        rotation: 90,
-        values: [ 20, 20, 20, 20, 20, 20, 20, 20, 20, 180],
-        text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
-        direction: 'clockwise',
-        textinfo: 'text',
-        textposition: 'inside',
-        marker: {
-          colors: ['','','','','','','','','','white'],
-          labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
-          hoverinfo: 'label'
+        name: 'washfreq',
+        text: washfreq,
+        hoverinfo: 'text+name'},
+    {values: [180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180],
+    rotation: 90,
+    direction: 'clockwise',
+    text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9', ''],
+    textinfo: 'text',
+    textposition:'inside',	  
+    marker: {colors:[
+          'rgb(190, 188, 182)',
+          'rgb(183, 188, 175)',
+          'rgb(176, 188, 156)',
+          'rgb(170, 188, 137)',
+          'rgb(163, 188, 118)',
+          'rgb(156, 188, 100)',
+          'rgb(149, 188, 81)',
+          'rgb(142, 188, 62)',
+          'rgb(130, 188, 45)',
+          'white']},
+    labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9', ''],
+    hoverinfo: 'label',
+    hole: .5,
+    type: 'pie',
+    showlegend: false
+    }];
+
+    var layout = {
+    shapes:[{
+        type: 'path',
+        path: gaugePointer(5),
+        fillcolor: '850000',
+        line: {
+            color: '850000'
         }
-      }
-        // let weight = 0;
-        // if (washfreq == 2 || washfreq == 3){
-        //     weight = 3;
-        // } else if (washfreq == 4){
-        //     weight = 1;
-        // } else if (washfreq == 5){
-        //     weight = -.5;
-        // } else if (washfreq == 6){
-        //     weight = -2;
-        // } else if (washfreq == 7){
-        //     weight = -3;
-        // }
-      // needle
-      var degrees = 180-(20 * washfreq),
-      radius = .5;
-      var radians = degrees * Math.PI / 180;
-      var x = radius * Math.cos(radians);
-      var y = radius * Math.sin(radians);
-  
-      var gaugeLayout = {
-        shapes: [{
-          type: 'line',
-          x0: radius,
-          y0: radius,
-          x1: x,
-          y1: y,
-          line: {
-            color: 'red',
-            width: 5
-          }
         }],
         title: 'Belly Button Washing Frequency: Scrubs per Week',
-        xaxis: {zeroline: false, range: [-1, 1],  fixedrange: true},
-        yaxis: {zeroline: false, range: [-1, 1],  fixedrange: true}
-      }
-  
-      var dataGauge = [traceGauge]
-  
-      Plotly.plot('gauge', dataGauge, gaugeLayout)
-    })};
+        autosize:true,
+    //height: 1000,
+    //width: 1000,
+    xaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]},
+    yaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]}
+    };
+
+    Plotly.newPlot('gauge', data, layout);
+
+
+    
+
+})};
+
+
