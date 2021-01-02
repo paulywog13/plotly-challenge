@@ -70,16 +70,17 @@ function optionChanged(subjectId) {
     // Creating a trace for the bubble chart
     trace_bubble = [{
         x: firstGraphInfo.otu_ids, 
-        y: firstGraphInfo.sample_values,
-        text: firstGraphInfo.otu_label,
+        y: firstGraphInfo.sample_values, 
+        text: firstGraphInfo.otu_labels,
         mode: "markers",
         marker: {color: firstGraphInfo.otu_ids, 
                  size:  firstGraphInfo.sample_values,
                  colorscale: 'Earth'}
     }]
     layout = {
+        title: '<b>Belly Button OTU Values Bubble Chart</b>',
         xaxis: {title: {text: "OTU ID"}},
-        height: 700, 
+        height: 550, 
         width: 1200
     }
     Plotly.newPlot("bubble", trace_bubble, layout)
