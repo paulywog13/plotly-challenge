@@ -4,7 +4,7 @@ function dashboard() {
     var dropdownMenu = d3.select("#selDataset");
 
 // Use the D3 library to read in `samples.json`.
-d3.json("/data/samples.json").then((importedData) => {
+d3.json("data/samples.json").then((importedData) => {
     var data = importedData;
     console.log(data);
     data.names.forEach(d =>{
@@ -17,7 +17,7 @@ dashboard()
 
 // Creating a function for the main function based upon the Subject ID change
 function optionChanged(subjectId) {
-    d3.json("/data/samples.json").then((data) => {
+    d3.json("data/samples.json").then((data) => {
     var demoInfo = data.metadata.filter(md => md.id == subjectId)
     var firstDemoInfo = demoInfo[0]
     
