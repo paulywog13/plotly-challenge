@@ -16,13 +16,19 @@ d3.json("/data/samples.json").then((importedData) => {
 };
 dashboard() 
 
-
+// Creating a function for the main function based upon the Subject ID change
 function optionChanged(subjectId) {
     d3.json("/data/samples.json").then((data) => {
     var demoInfo = data.metadata.filter(md => md.id == subjectId)
     var firstDemoInfo = demoInfo[0]
+    
+    // Recording the Demographic Info for original Subject and Changed Subject
     console.log(firstDemoInfo)
     console.log(demoInfo)
+    // Saving the Washing Frequency from the Demographic Info of the Subject for the Gauge Chart
+    var washfreq = firstDemoInfo['wfreq']
+    console.log(washfreq)
+
     var demographInfo = d3.select("#sample-metadata");
     // Needing to clear the list for the change
     demographInfo.html("")
@@ -30,8 +36,8 @@ function optionChanged(subjectId) {
     Object.entries(firstDemoInfo).forEach(([key, value]) => {
         demographInfo.append("p").text(`${key}:${value}`)
     })
-    // Create a horizontal bar chart with a dropdown menu to 
-    // display the top 10 OTUs found in that individual.
+    // Create a horizontal bar chart with a dropdown menu to display the top 10
+    // OTUs found in that individual.
 
     // Inputting data for bar chart
     var graphInfo = data.samples.filter(sd => sd.id == subjectId)
@@ -77,18 +83,17 @@ function optionChanged(subjectId) {
     }
     Plotly.newPlot("bubble", trace_bubble, layout)
 
-    // Creating a trace for the gauge chart
-    // Trig to calc meter point
-    
+    // Creating a function for the gauge chart and gauge needle    
     function gaugePointer(value){
-       
-    var degrees = 180 +(20 * (9 - value) - 180),
+        
+    // Trig to calc meter point moving meter 20 degrees for each wash
+    var degrees = 180 - (20 * value),
         radius = .5;
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians);
     var y = radius * Math.sin(radians);
 
-    // Path: may have to change to create a better triangle
+    // Create a path for the pointer to define pointer shape
     var mainPath = 'M -.0 -0.035 L .0 0.035 L ',
         pathX = String(x),
         space = ' ',
@@ -99,8 +104,9 @@ function optionChanged(subjectId) {
         return path;
 
     }
-    var washfreq = data.metadata.wfreq;
-    var data = [{ 
+    
+    var wash_gauge = [{ 
+        // Defining location and size of the pointer cap in the gauge
         type: 'scatter',
         x: [0], 
         y: [0],
@@ -109,8 +115,10 @@ function optionChanged(subjectId) {
         name: 'washfreq',
         text: washfreq,
         hoverinfo: 'text+name'},
+    // Assign the number and width of each wedge segment for the gauge chart
     {values: [180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180],
     rotation: 90,
+    // Adding the inner text and color to each wedge and which direction the text will display
     direction: 'clockwise',
     text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9', ''],
     textinfo: 'text',
@@ -136,7 +144,7 @@ function optionChanged(subjectId) {
     var layout = {
     shapes:[{
         type: 'path',
-        path: gaugePointer(5),
+        path: gaugePointer(washfreq),
         fillcolor: '850000',
         line: {
             color: '850000'
@@ -144,15 +152,14 @@ function optionChanged(subjectId) {
         }],
         title: 'Belly Button Washing Frequency: Scrubs per Week',
         autosize:true,
-    //height: 1000,
-    //width: 1000,
+    
     xaxis: {zeroline:false, showticklabels:false,
                 showgrid: false, range: [-1, 1]},
     yaxis: {zeroline:false, showticklabels:false,
                 showgrid: false, range: [-1, 1]}
     };
 
-    Plotly.newPlot('gauge', data, layout);
+    Plotly.newPlot('gauge', wash_gauge, layout);
 
 
     
