@@ -64,7 +64,7 @@ function optionChanged(subjectId) {
         orientation: "h"
     }]
     layout = {
-        title: "<b>Belly Button Bar Chart</b>"
+        title: "<b>Top 10 OTU IDs Belly Button Bar Chart</b>"
     }
     Plotly.newPlot("bar", trace_bar, layout)
     // Creating a trace for the bubble chart
