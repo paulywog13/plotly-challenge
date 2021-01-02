@@ -1,4 +1,4 @@
-// Writing main fuction
+// Writing main dashboard fuction
 function dashboard() {
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");

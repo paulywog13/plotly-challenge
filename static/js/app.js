@@ -1,4 +1,4 @@
-// Writing main fuction
+// Writing main dashboard fuction
 function dashboard() {
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");
@@ -11,18 +11,23 @@ d3.json("/data/samples.json").then((importedData) => {
         dropdownMenu.append("option").text(d).property("value");
     });
     optionChanged(data.names[0])
-
 });   
 };
 dashboard() 
 
-
+// Creating a function for the main function based upon the Subject ID change
 function optionChanged(subjectId) {
     d3.json("/data/samples.json").then((data) => {
     var demoInfo = data.metadata.filter(md => md.id == subjectId)
     var firstDemoInfo = demoInfo[0]
+    
+    // Recording the Demographic Info for original Subject and Changed Subject
     console.log(firstDemoInfo)
     console.log(demoInfo)
+    // Saving the Washing Frequency from the Demographic Info of the Subject for the Gauge Chart
+    var washfreq = firstDemoInfo['wfreq']
+    console.log(washfreq)
+
     var demographInfo = d3.select("#sample-metadata");
     // Needing to clear the list for the change
     demographInfo.html("")
@@ -30,8 +35,8 @@ function optionChanged(subjectId) {
     Object.entries(firstDemoInfo).forEach(([key, value]) => {
         demographInfo.append("p").text(`${key}:${value}`)
     })
-    // Create a horizontal bar chart with a dropdown menu to 
-    // display the top 10 OTUs found in that individual.
+    // Create a horizontal bar chart with a dropdown menu to display the top 10
+    // OTUs found in that individual.
 
     // Inputting data for bar chart
     var graphInfo = data.samples.filter(sd => sd.id == subjectId)
@@ -59,7 +64,7 @@ function optionChanged(subjectId) {
         orientation: "h"
     }]
     layout = {
-        title: "Belly Button Bar Chart"
+        title: "<b>Belly Button Bar Chart</b>"
     }
     Plotly.newPlot("bar", trace_bar, layout)
     // Creating a trace for the bubble chart
@@ -73,42 +78,88 @@ function optionChanged(subjectId) {
                  colorscale: 'Earth'}
     }]
     layout = {
-        xaxis: {title: {text: "OTU ID"}}
+        xaxis: {title: {text: "OTU ID"}},
+        height: 700, 
+        width: 1200
     }
     Plotly.newPlot("bubble", trace_bubble, layout)
-    })};
 
+    // Creating a function for the gauge chart and gauge needle    
+    function gaugePointer(value){
+        
+    // Trig to calc meter point moving meter 20 degrees for each wash
+    var degrees = 180 - (20 * value),
+        radius = .5;
+    var radians = degrees * Math.PI / 180;
+    var x = radius * Math.cos(radians);
+    var y = radius * Math.sin(radians);
 
-// // Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
-// // Sort the otu data by samples
-// data.sort(
-//     function(a, b) {
-//         if (a.names === b.) 
-//     }
-//     )
+    // Create a path for the pointer to define pointer shape
+    var mainPath = 'M -.0 -0.035 L .0 0.035 L ',
+        pathX = String(x),
+        space = ' ',
+        pathY = String(y),
+        pathEnd = ' Z';
+    var path = mainPath.concat(pathX,space,pathY,pathEnd);
+        
+        return path;
 
-// // Call updatePlotly() when a change takes place to the DOM
-// d3.selectAll("#selDataset").on("change", getData);
+    };
+    // Designing the gauge features for the chart
+    var wash_gauge = [{ 
+        // Defining location and size of the pointer cap in the gauge
+        type: 'scatter',
+        x: [0], 
+        y: [0],
+        marker: {size: 18, color:'850000'},
+        showlegend: false,
+        name: 'washfreq',
+        text: washfreq,
+        hoverinfo: 'text+name'},
+    // Assigning the number and width of each wedge segment for the gauge chart
+    {values: [180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180],
+    rotation: 90,
+    // Adding the inner text and color to each wedge and which direction the text will display
+    direction: 'clockwise',
+    text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9', ''],
+    textinfo: 'text',
+    textposition:'inside',	  
+    marker: {colors:[
+          'rgb(190, 188, 182)',
+          'rgb(183, 188, 175)',
+          'rgb(176, 188, 156)',
+          'rgb(170, 188, 137)',
+          'rgb(163, 188, 118)',
+          'rgb(156, 188, 100)',
+          'rgb(149, 188, 81)',
+          'rgb(142, 188, 62)',
+          'rgb(130, 188, 45)',
+          'white']},
+    labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9', ''],
+    hoverinfo: 'label',
+    hole: .5,
+    type: 'pie',
+    showlegend: false
+    }];
+    // Creating the layout for the pointer position based upon the wash frequency for the chosen subject
+    var layout = {
+    shapes:[{
+        type: 'path',
+        path: gaugePointer(washfreq),
+        fillcolor: '850000',
+        line: {
+            color: '850000'
+        }
+        }],
+        title: '<b>Belly Button Washing Frequency</b>' + '<br>' + 'Scrubs per Week',
+        autosize:true,
+    
+    xaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]},
+    yaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]}
+    };
 
-// // This function is called when a dropdown menu item is selected
-// function getData() {
-//     // Use D3 to select the dropdown menu
-//     var dropdownMenu = d3.select("#selDataset");
-//     // Assign the value of the dropdown menu option to a variable
-//     var dataset = dropdownMenu.property("value");
-//     // Initialize an empty array for the sample's data
-//     var data = [];
+    Plotly.newPlot('gauge', wash_gauge, layout);
 
-//     if (dataset == "940") {
-//         names = 940;
-//     }
-//     updatePlotly(data);
-// }
-
-// // // Update the restyled plot's values
-// // function updatePlotly(newdata) {
-// //   Plotly.restyle("pie", "values", [newdata]);
-// // }
-  
-// // init();
-  
+})};
