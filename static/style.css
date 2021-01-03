@@ -1,3 +1,13 @@
 .jumbotron {
     background-color:#337ab7;
 }
+
+.jumbotron h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 45px;
+    color: #fff; 
+}
+
+.jumbotron p {
+    color: #fff;
+}
