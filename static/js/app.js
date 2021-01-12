@@ -3,7 +3,7 @@ function dashboard() {
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");
 
-// Use the D3 library to read in `samples.json`.
+// Use the D3 library to read in `samples.json`
 d3.json("data/samples.json").then((importedData) => {
     var data = importedData;
     console.log(data);
@@ -31,7 +31,7 @@ function optionChanged(subjectId) {
     var demographInfo = d3.select("#sample-metadata");
     // Needing to clear the list for the change
     demographInfo.html("")
-    // Appending the demographic info box 
+    // Appending the demographic info table values based upon the test subject selected
     Object.entries(firstDemoInfo).forEach(([key, value]) => {
         demographInfo.append("p").text(`${key}:${value}`)
     })
