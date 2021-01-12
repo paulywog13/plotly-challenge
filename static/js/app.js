@@ -95,7 +95,7 @@ function optionChanged(subjectId) {
     var x = radius * Math.cos(radians);
     var y = radius * Math.sin(radians);
 
-    // Create a path for the pointer to define pointer shape
+    // Create a path for the gauge pointer to define pointer shape
     var mainPath = 'M -.0 -0.035 L .0 0.035 L ',
         pathX = String(x),
         space = ' ',
@@ -114,17 +114,19 @@ function optionChanged(subjectId) {
         y: [0],
         marker: {size: 18, color:'850000'},
         showlegend: false,
-        name: 'washfreq',
+        name: 'Washes/Week',
         text: washfreq,
+        // Info that will show when the mouse is hovering over the pointer cap
         hoverinfo: 'text+name'},
     // Assigning the number and width of each wedge segment for the gauge chart
     {values: [180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180],
     rotation: 90,
-    // Adding the inner text and color to each wedge and which direction the text will display
+    // Adding the inner text each wedge and which direction the text will display
     direction: 'clockwise',
     text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9', ''],
     textinfo: 'text',
     textposition:'inside',	  
+    // Assigning the colors to the gauge wedges
     marker: {colors:[
           'rgb(190, 188, 182)',
           'rgb(183, 188, 175)',
