@@ -7,7 +7,9 @@ Languages used: JavaScript, CSS, HTML
 
 My main takeaway from this challenge is that using JavaScript and Plotly graphs are great tools for processing and presenting data in so that it can be displayed in a easy to read and understand format. I enjoyed learning and working with a variety of Plotly graphing and chart styles and it helped me to understand how and why different graphs would be used for different sets of data.
 
-The unique OTU ID Displays below the x axis at the bottom of the bubble chart when cursor hovers over each specific bubble. 
+The bubble chart was my favorite chart to create as it was fun working with the different color palettes to see how to best display the data. I like that I was able to display the unique OTU ID below the x axis at the bottom of the bubble chart when cursor hovers over each specific bubble while displaying the OTU labels and values on the bubble.  
+
+The gauge was by far the hardest chart to create and took the most time to research as we did not cover this type of chart in class. I found a variety of guage chart options but very few included a pointer. I thought it was cool to be able to use a little trigonometry to calculate the pointer movements and I need to do some more independent research to fully understand the path information for the pointer shape. 
 
 App deployed in github pages. You can access it with the link below.
 https://paulywog13.github.io/plotly-homework-challenge/
