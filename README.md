@@ -11,5 +11,7 @@ The bubble chart was my favorite chart to create as it was fun working with the 
 
 The gauge was by far the hardest chart to create and took the most time to research as we did not cover this type of chart in class. I found a variety of guage chart options but very few included a pointer. I thought it was cool to be able to use a little trigonometry to calculate the pointer movements and I need to do some more independent research to fully understand the path information for the pointer shape. 
 
+I also added in some style.css code to update the display on the website including font on coloring to give the site some uniqueness and to be more eye catching.
+
 App deployed in github pages. You can access it with the link below.
 https://paulywog13.github.io/plotly-homework-challenge/
