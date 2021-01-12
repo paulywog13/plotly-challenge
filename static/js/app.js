@@ -73,6 +73,7 @@ function optionChanged(subjectId) {
         y: firstGraphInfo.sample_values, 
         text: firstGraphInfo.otu_labels,
         mode: "markers",
+        // Assigning what values will be used to determine the bubble size and color
         marker: {color: firstGraphInfo.otu_ids, 
                  size:  firstGraphInfo.sample_values,
                  colorscale: 'Earth'}
