@@ -14,4 +14,5 @@ The gauge was by far the hardest chart to create and took the most time to resea
 I also added in some style.css code to update the display on the website including font on coloring to give the site some uniqueness and to be more eye catching.
 
 My app has been deployed in github pages and you can access it with the link below.
+
 https://paulywog13.github.io/plotly-challenge/
