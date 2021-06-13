@@ -11,6 +11,9 @@ The bubble chart was my favorite chart to create as it was fun working with the 
 
 The gauge was by far the hardest chart to create and took the most time to research as we did not cover this type of chart in class. I found a variety of guage chart options but very few included a pointer. I thought it was cool to be able to use a little trigonometry to calculate the pointer movements and I need to do some more independent research to fully understand the path information for the pointer shape. 
 
+![Screenshot (3)](https://user-images.githubusercontent.com/69220393/121796478-8d5c2c00-cbd6-11eb-921a-08075a62363b.png)
+
+
 I also added in some style.css code to update the display on the website including font on coloring to give the site some uniqueness and to be more eye catching.
 
 My app has been deployed in github pages and you can access it with the link below.
