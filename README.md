@@ -9,6 +9,8 @@ My main takeaway from this challenge is that using JavaScript and Plotly graphs 
 
 The bubble chart was my favorite chart to create as it was fun working with the different color palettes to see how to best display the data. I like that I was able to display the unique OTU ID below the x axis at the bottom of the bubble chart when cursor hovers over each specific bubble while displaying the OTU labels and values on the bubble.  
 
+![Plotly Bubble Chart](https://user-images.githubusercontent.com/69220393/121950933-7cff9a80-cd17-11eb-8305-198c7221fdef.png)
+
 The gauge was by far the hardest chart to create and took the most time to research as we did not cover this type of chart in class. I found a variety of guage chart options but very few included a pointer. I thought it was cool to be able to use a little trigonometry to calculate the pointer movements and I need to do some more independent research to fully understand the path information for the pointer shape. 
 
 ![Screenshot (3)](https://user-images.githubusercontent.com/69220393/121796562-28ed9c80-cbd7-11eb-95fe-2cfe647ace2a.png)
